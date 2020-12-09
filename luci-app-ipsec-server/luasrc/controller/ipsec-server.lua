@@ -1,8 +1,8 @@
--- Copyright 2018-2019 Lienol <lawlienol@gmail.com>
+-- Copyright 2018-2020 Lienol <lawlienol@gmail.com>
 module("luci.controller.ipsec-server", package.seeall)
 
 function index()
-    if not nixio.fs.access("/etc/config/ipsec") then return end
+    if not nixio.fs.access("/etc/config/luci-app-ipsec-server") then return end
 
     entry({"admin", "vpn"}, firstchild(), "VPN", 45).dependent = false
     entry({"admin", "vpn", "ipsec-server"},

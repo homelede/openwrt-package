@@ -2,6 +2,7 @@
 
 START=99
 
+CONFIG="luci-app-ipsec-server"
 IPSEC_SECRETS_FILE=/etc/ipsec.secrets
 IPSEC_CONN_FILE=/etc/ipsec.conf
 
@@ -72,13 +73,13 @@ setup_login() {
 }
 
 start() {
-	local vt_enabled=$(uci -q get ipsec.@service[0].enabled)
+	local vt_enabled=$(uci -q get $CONFIG.@service[0].enabled)
 	[ "$vt_enabled" = 0 ] && return 1
 	
-	local vt_clientip=$(uci -q get ipsec.@service[0].clientip)
-	local vt_clientdns=$(uci -q get ipsec.@service[0].clientdns)
+	local vt_clientip=$(uci -q get $CONFIG.@service[0].clientip)
+	local vt_clientdns=$(uci -q get $CONFIG.@service[0].clientdns)
 	[ -z "$vt_clientdns" ] && local vt_clientdns="8.8.4.4"
-	local vt_secret=$(uci -q get ipsec.@service[0].secret)
+	local vt_secret=$(uci -q get $CONFIG.@service[0].secret)
 	
 	cat > $IPSEC_CONN_FILE <<EOF
 # ipsec.conf - strongSwan IPsec configuration file
@@ -113,7 +114,7 @@ EOF
 
 	add_rule
 	
-	config_load ipsec
+	config_load "luci-app-ipsec-server"
 	config_foreach setup_login users
 	
 	/usr/lib/ipsec/starter --daemon charon --nofork > /dev/null 2>&1 &

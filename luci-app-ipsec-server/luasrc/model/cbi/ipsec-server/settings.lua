@@ -2,9 +2,8 @@ local s = require "luci.sys"
 local net = require"luci.model.network".init()
 local ifaces = s.net:devices()
 local m, s, o
-mp = Map("ipsec", translate("IPSec VPN Server"))
-mp.description = translate(
-                     "IPSec VPN connectivity using the native built-in VPN Client on iOS or Andriod (IKEv1 with PSK and Xauth)")
+mp = Map("luci-app-ipsec-server", translate("IPSec VPN Server"))
+mp.description = translate("IPSec VPN connectivity using the native built-in VPN Client on iOS or Andriod (IKEv1 with PSK and Xauth)")
 mp.template = "ipsec-server/index"
 
 s = mp:section(TypedSection, "service")
