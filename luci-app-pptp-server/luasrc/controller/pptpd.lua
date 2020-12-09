@@ -1,8 +1,8 @@
--- Copyright 2018-2019 Lienol <lawlienol@gmail.com>
+-- Copyright 2018-2020 Lienol <lawlienol@gmail.com>
 module("luci.controller.pptpd", package.seeall)
 
 function index()
-    if not nixio.fs.access("/etc/config/pptpd") then return end
+    if not nixio.fs.access("/etc/config/luci-app-pptp-server") then return end
 
     entry({"admin", "vpn"}, firstchild(), "VPN", 45).dependent = false
     entry({"admin", "vpn", "pptpd"}, alias("admin", "vpn", "pptpd", "settings"),

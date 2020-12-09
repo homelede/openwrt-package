@@ -1,7 +1,7 @@
 #!/bin/sh /etc/rc.common
 
 START=99
-CONFIG=pptpd
+CONFIG=luci-app-pptp-server
 CONFIG_FILE=/var/etc/$CONFIG.conf
 RUN_D=/var/run
 CHAP_SECRETS=/var/etc/chap-secrets
@@ -108,7 +108,7 @@ start_pptpd() {
 	done
 	ln -sfn $CHAP_SECRETS /etc/ppp/chap-secrets
 	chmod 600 /etc/ppp/*-secrets
-	/usr/sbin/$CONFIG -c $CONFIG_FILE
+	/usr/sbin/pptpd -c $CONFIG_FILE
 }
 
 del_user()
@@ -120,7 +120,7 @@ del_user()
 
 start() {
 	config_load $CONFIG
-	setup_config $CONFIG || return
+	setup_config "pptpd" || return
 	del_user
 	add_rule
 	config_foreach setup_login users

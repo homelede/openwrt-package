@@ -2,8 +2,7 @@ local e = {}
 local o = require "luci.dispatcher"
 local a = luci.util.execi("/bin/busybox top -bn1 | grep '/usr/sbin/pppd'")
 for t in a do
-    local a, n, h, s, o, i = t:match(
-                                 "^ *(%d+) +(%d+) +.+options%.pptpd +(%d+) +(%S.-%S)%:(%S.-%S) +.+ +(.+)")
+    local a, n, h, s, o, i = t:match("^ *(%d+) +(%d+) +.+options%.pptpd +(%d+) +(%S.-%S)%:(%S.-%S) +.+ +(.+)")
     local t = tonumber(a)
     if t then
         e["%02i.%s" % {t, "online"}] = {
@@ -37,8 +36,7 @@ end
 f = SimpleForm("processes", translate("PPTP VPN Server"))
 f.reset = false
 f.submit = false
-f.description = translate(
-                    "Simple, quick and convenient PPTP VPN, universal across the platform")
+f.description = translate("Simple, quick and convenient PPTP VPN, universal across the platform")
 t = f:section(Table, e, translate("Online Users"))
 t:option(DummyValue, "GATEWAY", translate("Server IP"))
 t:option(DummyValue, "VIP", translate("Client IP"))
